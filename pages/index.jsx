@@ -32,6 +32,7 @@ function Home() {
 
   const [arr, setArr] = useState([1, 2, 3])
   const [pluss, setPluss] = useState(false)
+  const [is, setIs] = useState(false);
 
 
   const [opacity, setOpacity] = useState(false);
@@ -83,27 +84,10 @@ function Home() {
   }
 
 
-  const [is, setIs] = useState(false);
-  function handlerPDF() {
-setIs(true)
+  function handlerPDF(e) {
 
 
-    // const downloadDoc = document.createElement('a')
-
-    // downloadDoc.href = '/PDFdoc'
-
-    // downloadDoc.click()
-
-    // document.body.appendChild(downloadDoc)
-
-
-    
-
-    // userDB.users[user.uid] && userDB.users[user.uid].uid
-    // ? router.push('/PdfViewer')
-    // : setUserSuccess('RequireCodeActivation')
-
-    // router.push('/PdfViewer')
+    setUserSuccess('RequireCodeActivation')
   }
   function x() {
     setMode(!mode)
@@ -119,7 +103,7 @@ setIs(true)
 
   console.log(numeration)
   console.log(image)
-  
+
 
 
 
@@ -182,7 +166,7 @@ setIs(true)
             <QRCode
               id='qr'
               size={256}
-              style={{ height: "auto", maxWidth: "100%", width: "100%", border: 'none', backgroundColor: 'red'}}
+              style={{ height: "auto", maxWidth: "100%", width: "100%", border: 'none', backgroundColor: 'red' }}
               value={qr}
               level={'H'}
               includeMargin={false}
@@ -201,7 +185,9 @@ setIs(true)
         </div>
 
         {/* <button className={`${style.pluss}`} onClick={handlerPDF}>pdf</button> */}
-        <InvoicePDF style={style.pluss} click={handlerPDF}/>
+        {userDB && userDB.users && userDB.users[user.uid] && userDB.users[user.uid].uid
+          ? <InvoicePDF style={style.pluss} />
+          : <button onClick={handlerPDF} className={style.pluss} >pdf</button>}
 
 
         {success == 'NonExist' && <Error>ERROR: codigo no existente</Error>}
@@ -209,10 +195,10 @@ setIs(true)
         {success == 'Premium' && <Success>Felicidades, ERES PREMIUM !!</Success>}
         {success == 'RequireCodeActivation' && <Error>Debes Activar Tu Cuenta</Error>}
 
-       
+
         <Particles />
       </div>
-      
+
 
       <Modal mode={mode} click={x} text={userDB.users && userDB.users[user.uid] && userDB.users[user.uid].uid ? 'Felicidades Eres Premium' : 'Ingresa tu codigo de activación'}>
         <form className={style.formActive}>
@@ -226,14 +212,14 @@ setIs(true)
           <div className={style.buttonsContainer}>
             {userDB.users && userDB.users[user.uid] && userDB.users[user.uid].uid ? '' : <Button style='buttonPrimary' click={nextClick}>Continuar</Button>}
           </div>
-        
-          {userDB.users && userDB.users[user.uid] && userDB.users[user.uid].uid 
-          ? <Link href='https://api.whatsapp.com/send?phone=+59168033785&text=Hola%20OBZON,%20necesito%20Soporte%20con%20la%20app...' legacyBehavior>
-          <a target='_blank' className={style.whatsAppLink} >Soporte OBZON</a>
-        </Link>
-          : <Link href='https://api.whatsapp.com/send?phone=+59168033785&text=Hola%20OBZON,%20necesito%20un%20c%C3%B3digo%20de%20ACTIVACI%C3%93N%20para%20la%20app...' legacyBehavior>
-            <a target='_blank' className={style.whatsAppLink} >Solicitar un codigo de ACTIVACIÓN</a>
-          </Link>}
+
+          {userDB.users && userDB.users[user.uid] && userDB.users[user.uid].uid
+            ? <Link href='https://api.whatsapp.com/send?phone=+59168033785&text=Hola%20OBZON,%20necesito%20Soporte%20con%20la%20app...' legacyBehavior>
+              <a target='_blank' className={style.whatsAppLink} >Soporte OBZON</a>
+            </Link>
+            : <Link href='https://api.whatsapp.com/send?phone=+59168033785&text=Hola%20OBZON,%20necesito%20un%20c%C3%B3digo%20de%20ACTIVACI%C3%93N%20para%20la%20app...' legacyBehavior>
+              <a target='_blank' className={style.whatsAppLink} >Solicitar un codigo de ACTIVACIÓN</a>
+            </Link>}
         </form>
       </Modal>
 
