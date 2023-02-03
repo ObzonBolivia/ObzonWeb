@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './config'
-import { onAuthStateChanged, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, signOut  } from "firebase/auth";
+import { onAuthStateChanged, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, GoogleAuthProvider, FacebookAuthProvider, signOut  } from "firebase/auth";
 import { getDatabase, ref, onValue, set, child, get, remove, update} from "firebase/database";
 
 const app = initializeApp(firebaseConfig)
@@ -59,7 +59,7 @@ function withFacebook () {
 
 
 function withGoogle () {
-  signInWithPopup(auth, provider)
+  signInWithRedirect(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
