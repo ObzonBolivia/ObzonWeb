@@ -7,9 +7,12 @@ import { WithAuth } from '../HOCs/WithAuth'
 import Button from '../components/Button'
 import style from '../styles/Layout.module.css'
 import { useUser } from '../context/Context'
+import React, {useCallback} from 'react';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 function Layout(props) {
     const router = useRouter()
+    const handle = useFullScreenHandle();
 
 
     const { user, userDB, setUserProfile, setUserSuccess, success, setUserData, postsIMG, setUserPostsIMG } = useUser()
@@ -20,11 +23,12 @@ function Layout(props) {
     function redirect(rute) {
         router.push(rute)
     }
+    
     console.log(user)
     console.log(userDB)
     return (
-        <>
-            <header className={style.header}>
+        <FullScreen  handle={handle}>
+            <header className={style.header}  onClick={handle.enter}>
                 <p>Bienvenido a OBZON</p>
                 <div className={style.containerButtons}>
 
@@ -50,7 +54,7 @@ function Layout(props) {
                 </div>
             </header>
             <main className={style.main} >{props.children}</main>
-        </>
+        </FullScreen >
 
     )
 }
