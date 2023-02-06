@@ -7,7 +7,7 @@ import { WithAuth } from '../HOCs/WithAuth'
 import Button from '../components/Button'
 import style from '../styles/Layout.module.css'
 import { useUser } from '../context/Context'
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 function Layout(props) {
@@ -23,38 +23,47 @@ function Layout(props) {
     function redirect(rute) {
         router.push(rute)
     }
-    
+
+    function handleREF() {
+        const container = document.getElementById('container')
+    document.body.requestFullscreen()
+    }
+
     console.log(user)
     console.log(userDB)
     return (
-        <FullScreen  handle={handle}>
-            <header className={style.header}  onClick={handle.enter}>
-                <p>Bienvenido a OBZON</p>
-                <div className={style.containerButtons}>
+        // <FullScreen handle={handle}>
+            <div id="container" style={{}}>
+                <header className={style.header} onClick={handle.enter}>
+                    <p onClick={handleREF}>Bienvenido a OBZON</p>
+                    <div className={style.containerButtons}>
 
-                    {user && userDB && userDB.users && userDB.users[user.uid] && userDB.users[user.uid].rol && userDB.users[user.uid].rol == 'Admin' &&
-                        <>
-                            <Button style='buttonSecondary' click={() => redirect('/')}>
-                                Home
-                            </Button>
-                            <img src="/home.svg" className={style.icon} alt="power" onClick={() => redirect('/')} />
-                            <Button style='buttonSecondary' click={() => redirect('/Admin')}>
-                                Admin
-                            </Button>
-                            <img src="/user.svg" className={style.icon} alt="power" onClick={() => redirect('/Admin')} />
-                            <Button style='buttonSecondary' click={() => redirect('/UuidController')}>
-                                Generar IDU
-                            </Button>
-                            <img src="/config.svg" className={style.icon} alt="power" onClick={() => redirect('/UuidController')} />
-                        </>}
-                    <Button style='buttonSecondary' click={logout}>
-                        Cerrar Sesion
-                    </Button>
-                    <img src="/power.svg" className={style.icon} alt="power" onClick={logout} />
-                </div>
-            </header>
-            <main className={style.main} >{props.children}</main>
-        </FullScreen >
+                        {user && userDB && userDB.users && userDB.users[user.uid] && userDB.users[user.uid].rol && userDB.users[user.uid].rol == 'Admin' &&
+                            <>
+                                <Button style='buttonSecondary' click={() => redirect('/')}>
+                                    Home
+                                </Button>
+                                <img src="/home.svg" className={style.icon} alt="power" onClick={() => redirect('/')} />
+                                <Button style='buttonSecondary' click={() => redirect('/Admin')}>
+                                    Admin
+                                </Button>
+                                <img src="/user.svg" className={style.icon} alt="power" onClick={() => redirect('/Admin')} />
+                                <Button style='buttonSecondary' click={() => redirect('/UuidController')}>
+                                    Generar IDU
+                                </Button>
+                                <img src="/config.svg" className={style.icon} alt="power" onClick={() => redirect('/UuidController')} />
+                            </>}
+                        <Button style='buttonSecondary' click={logout}>
+                            Cerrar Sesion
+                        </Button>
+                        <img src="/power.svg" className={style.icon} alt="power" onClick={logout} />
+                    </div>
+                </header>
+                <main className={style.main} >{props.children}</main>
+
+            </div>
+
+        // </FullScreen >
 
     )
 }
